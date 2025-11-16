@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base target="_top">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 20px;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 30px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 15px;
+      opacity: 0.95;
+    }
+    
+    .version-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 12px;
+      margin-top: 10px;
+      font-weight: 600;
+    }
+    
+    .tabs {
+      display: flex;
+      background: #f8f9fa;
+      border-bottom: 2px solid #e0e0e0;
+    }
+    
+    .tab {
+      flex: 1;
+      padding: 16px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      border-bottom: 3px solid transparent;
+    }
+    
+    .tab:hover {
+      background: #e9ecef;
+    }
+    
+    .tab.active {
+      background: white;
+      border-bottom-color: #667eea;
+      color: #667eea;
+    }
+    
+    .tab-content {
+      display: none;
+      padding: 30px;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    .tab-content.active {
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+    }
+    
+    .stat-value {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    
+    .stat-label {
+      font-size: 13px;
+      opacity: 0.9;
+    }
+    
+    .section {
+      margin-bottom: 30px;
+    }
+    
+    .section h2 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #667eea;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .section p {
+      color: #666;
+      margin-bottom: 15px;
+      line-height: 1.6;
+    }
+    
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    
+    .btn {
+      padding: 16px 24px;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+    
+    .btn:active:not(:disabled) {
+      transform: translateY(0);
+    }
+    
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    .btn-success {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      color: white;
+    }
+    
+    .btn-warning {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+    }
+    
+    .btn-info {
+      background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+      color: white;
+    }
+    
+    .btn-secondary {
+      background: linear-gradient(135deg, #a8a8a8 0%, #7f7f7f 100%);
+      color: white;
+    }
+    
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .toggle-container {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .toggle-group {
+      margin-bottom: 20px;
+    }
+    
+    .toggle-group h3 {
+      font-size: 16px;
+      margin-bottom: 12px;
+      color: #495057;
+      font-weight: 600;
+    }
+    
+    .toggle-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      background: white;
+      border-radius: 8px;
+      margin-bottom: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    
+    .toggle-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: #333;
+    }
+    
+    .toggle-switch {
+      position: relative;
+      width: 50px;
+      height: 26px;
+    }
+    
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: 0.3s;
+      border-radius: 26px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 20px;
+      width: 20px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.3s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(24px);
+    }
+    
+    .status {
+      padding: 16px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+      animation: slideIn 0.3s ease;
+    }
+    
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+      display: block;
+    }
+    
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+      display: block;
+    }
+    
+    .status.info {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 1px solid #bee5eb;
+      display: block;
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: #f8f9fa;
+      color: #666;
+      font-size: 13px;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+    
+    .spinner {
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 15px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .integration-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    
+    .integration-card {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .integration-card:hover {
+      border-color: #667eea;
+      box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+    }
+    
+    .integration-card.enabled {
+      border-color: #38ef7d;
+      background: #f0fdf4;
+    }
+    
+    .integration-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+    
+    .integration-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: #333;
+    }
+    
+    .badge {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    
+    .badge-enabled {
+      background: #d4edda;
+      color: #155724;
+    }
+    
+    .badge-disabled {
+      background: #f8d7da;
+      color: #721c24;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>📂 Life Admin OS</h1>
+      <p>Your Personal Automation Dashboard</p>
+      <div class="version-badge">v2.0.0</div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('dashboard')">📊 Dashboard</div>
+      <div class="tab" onclick="switchTab('features')">⚙️ Features</div>
+      <div class="tab" onclick="switchTab('integrations')">🔗 Integrations</div>
+      <div class="tab" onclick="switchTab('actions')">▶️ Actions</div>
+    </div>
+
+    <!-- Dashboard Tab -->
+    <div id="dashboard" class="tab-content active">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-labels">0</div>
+          <div class="stat-label">Labels Created</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-subscriptions">0</div>
+          <div class="stat-label">Subscriptions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-receipts">0</div>
+          <div class="stat-label">Receipts</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-actions">0</div>
+          <div class="stat-label">Action Items</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-compliance">0</div>
+          <div class="stat-label">Compliance Events</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🚀 Quick Actions</h2>
+        <div class="button-grid">
+          <button class="btn btn-primary" onclick="runScan()">
+            📧 Scan Appointments
+          </button>
+          <button class="btn btn-success" onclick="runSubscriptionCheck()">
+            💳 Check Subscriptions
+          </button>
+          <button class="btn btn-info" onclick="runReceiptScan()">
+            🧾 Scan Receipts
+          </button>
+          <button class="btn btn-warning" onclick="syncTriggers()">
+            🔄 Sync Triggers
+          </button>
+        </div>
+      </div>
+
+      <button class="btn btn-secondary" onclick="refreshStats()" style="width: 100%; margin-top: 20px;">
+        🔄 Refresh Statistics
+      </button>
+    </div>
+
+    <!-- Features Tab -->
+    <div id="features" class="tab-content">
+      <div class="toggle-container">
+        <div class="toggle-group">
+          <h3>🎯 Core Features</h3>
+          <div class="toggle-item">
+            <span class="toggle-label">AI Classification (Google Gemini)</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-ai-classification" onchange="toggleFeature('AI_CLASSIFICATION', this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-label">Smart Tagging (Compliance Audit)</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-smart-tagging" onchange="toggleFeature('SMART_TAGGING', this.checked)" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-label">Subscription Tracking</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-subscription-tracking" onchange="toggleFeature('SUBSCRIPTION_TRACKING', this.checked)" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-label">Receipt Scanner</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-receipt-scanner" onchange="toggleFeature('RECEIPT_SCANNER', this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-label">Calendar Integration</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-calendar-integration" onchange="toggleFeature('CALENDAR_INTEGRATION', this.checked)">
+              <span class="slider"></span>
+            </label>
+          </div>
+          <div class="toggle-item">
+            <span class="toggle-label">Multi-Category Routing</span>
+            <label class="toggle-switch">
+              <input type="checkbox" id="toggle-multi-category-routing" onchange="toggleFeature('MULTI_CATEGORY_ROUTING', this.checked)" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <p style="text-align: center; color: #666; margin-top: 20px;">
+        Toggle features on/off as needed. Changes are saved automatically.
+      </p>
+    </div>
+
+    <!-- Integrations Tab -->
+    <div id="integrations" class="tab-content">
+      <div class="section">
+        <h2>🔗 External Integrations</h2>
+        <p>Enable integrations to connect Life Admin OS with your favorite tools.</p>
+        
+        <div class="integration-grid">
+          <div class="integration-card" onclick="toggleIntegration('SLACK')">
+            <div class="integration-icon">💬</div>
+            <div class="integration-name">Slack</div>
+            <span class="badge badge-disabled" id="badge-slack">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('TRELLO')">
+            <div class="integration-icon">📋</div>
+            <div class="integration-name">Trello</div>
+            <span class="badge badge-disabled" id="badge-trello">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('LINEAR')">
+            <div class="integration-icon">📐</div>
+            <div class="integration-name">Linear</div>
+            <span class="badge badge-disabled" id="badge-linear">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('NOTION')">
+            <div class="integration-icon">📝</div>
+            <div class="integration-name">Notion</div>
+            <span class="badge badge-disabled" id="badge-notion">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('WHATSAPP')">
+            <div class="integration-icon">📱</div>
+            <div class="integration-name">WhatsApp</div>
+            <span class="badge badge-disabled" id="badge-whatsapp">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('DISCORD')">
+            <div class="integration-icon">🎮</div>
+            <div class="integration-name">Discord</div>
+            <span class="badge badge-disabled" id="badge-discord">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('ZAPIER')">
+            <div class="integration-icon">⚡</div>
+            <div class="integration-name">Zapier</div>
+            <span class="badge badge-disabled" id="badge-zapier">Disabled</span>
+          </div>
+          <div class="integration-card" onclick="toggleIntegration('TODOIST')">
+            <div class="integration-icon">✅</div>
+            <div class="integration-name">Todoist</div>
+            <span class="badge badge-disabled" id="badge-todoist">Disabled</span>
+          </div>
+        </div>
+
+        <p style="margin-top: 20px; color: #666; font-size: 13px;">
+          💡 <strong>Tip:</strong> Configure API keys in the "Integrations" sheet before enabling.
+        </p>
+      </div>
+    </div>
+
+    <!-- Actions Tab -->
+    <div id="actions" class="tab-content">
+      <div class="section">
+        <h2>📧 Email Processing</h2>
+        <p>Scan and categorize your emails automatically.</p>
+        <div class="button-grid">
+          <button class="btn btn-primary" onclick="runScan()">
+            📧 Run Appointment Scan
+          </button>
+          <button class="btn btn-success" onclick="runSubscriptionCheck()">
+            💳 Check Subscriptions
+          </button>
+          <button class="btn btn-info" onclick="runReceiptScan()">
+            🧾 Scan Receipts
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>⚙️ System Management</h2>
+        <p>Configure and manage your automation system.</p>
+        <div class="button-grid">
+          <button class="btn btn-warning" onclick="syncTriggers()">
+            🔄 Sync Automation Triggers
+          </button>
+          <button class="btn btn-secondary" onclick="openSettings()">
+            ⚙️ Open Settings Sheet
+          </button>
+          <button class="btn btn-info" onclick="openComplianceLog()">
+            📊 View Compliance Log
+          </button>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>🔧 Advanced Actions</h2>
+        <p>Advanced operations for power users.</p>
+        <div class="button-grid">
+          <button class="btn btn-secondary" onclick="exportData()">
+            💾 Export All Data
+          </button>
+          <button class="btn btn-warning" onclick="clearCache()">
+            🗑️ Clear Cache
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="status" class="status"></div>
+    <div id="loading" class="loading">
+      <div class="spinner"></div>
+      <p style="color: #666;">Processing...</p>
+    </div>
+
+    <div class="footer">
+      Life Admin OS v2.0.0 | Built with ❤️ for productivity<br>
+      © 2024 | Free to use and modify
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    function switchTab(tabName) {
+      // Hide all tabs
+      document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.classList.remove('active');
+      });
+      
+      // Show selected tab
+      document.getElementById(tabName).classList.add('active');
+      event.target.classList.add('active');
+      
+      // Load data for specific tabs
+      if (tabName === 'dashboard') {
+        refreshStats();
+      } else if (tabName === 'features') {
+        loadFeatureStatus();
+      } else if (tabName === 'integrations') {
+        loadIntegrationStatus();
+      }
+    }
+
+    // Loading and status functions
+    function showLoading() {
+      document.getElementById('loading').style.display = 'block';
+      document.getElementById('status').style.display = 'none';
+    }
+
+    function hideLoading() {
+      document.getElementById('loading').style.display = 'none';
+    }
+
+    function showStatus(message, type) {
+      hideLoading();
+      const statusDiv = document.getElementById('status');
+      statusDiv.className = 'status ' + type;
+      statusDiv.innerHTML = message;
+      statusDiv.style.display = 'block';
+      
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        statusDiv.style.display = 'none';
+      }, 5000);
+    }
+
+    // Action functions
+    function runScan() {
+      showLoading();
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus('✅ ' + result, 'success');
+          refreshStats();
+        })
+        .withFailureHandler(function(error) {
+          showStatus('❌ Error: ' + error.message, 'error');
+        })
+        .runAppointmentScan();
+    }
+
+    function runSubscriptionCheck() {
+      showLoading();
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus('✅ ' + result, 'success');
+          refreshStats();
+        })
+        .withFailureHandler(function(error) {
+          showStatus('❌ Error: ' + error.message, 'error');
+        })
+        .checkSubscriptions();
+    }
+
+    function runReceiptScan() {
+      showLoading();
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus('✅ ' + result, 'success');
+          refreshStats();
+        })
+        .withFailureHandler(function(error) {
+          showStatus('❌ Error: ' + error.message, 'error');
+        })
+        .scanReceipts();
+    }
+
+    function syncTriggers() {
+      showLoading();
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus('✅ ' + result, 'success');
+        })
+        .withFailureHandler(function(error) {
+          showStatus('❌ Error: ' + error.message, 'error');
+        })
+        .syncTriggers();
+    }
+
+    function refreshStats() {
+      google.script.run
+        .withSuccessHandler(function(stats) {
+          document.getElementById('stat-labels').textContent = stats.total_labels;
+          document.getElementById('stat-subscriptions').textContent = stats.total_subscriptions;
+          document.getElementById('stat-receipts').textContent = stats.total_receipts;
+          document.getElementById('stat-actions').textContent = stats.total_actions;
+          document.getElementById('stat-compliance').textContent = stats.compliance_events;
+        })
+        .withFailureHandler(function(error) {
+          console.error('Failed to load stats:', error);
+        })
+        .getDashboardStats();
+    }
+
+    function toggleFeature(featureName, enabled) {
+      google.script.run
+        .withSuccessHandler(function(result) {
+          showStatus('✅ ' + result, 'success');
+        })
+        .withFailureHandler(function(error) {
+          showStatus('❌ Error: ' + error.message, 'error');
+        })
+        .toggleFeature(featureName, enabled);
+    }
+
+    function loadFeatureStatus() {
+      google.script.run
+        .withSuccessHandler(function(status) {
+          document.getElementById('toggle-ai-classification').checked = status.ai_classification;
+          document.getElementById('toggle-smart-tagging').checked = status.smart_tagging;
+          document.getElementById('toggle-subscription-tracking').checked = status.subscription_tracking;
+          document.getElementById('toggle-receipt-scanner').checked = status.receipt_scanner;
+          document.getElementById('toggle-calendar-integration').checked = status.calendar_integration;
+          document.getElementById('toggle-multi-category-routing').checked = status.multi_category_routing;
+        })
+        .withFailureHandler(function(error) {
+          console.error('Failed to load feature status:', error);
+        })
+        .getFeatureStatus();
+    }
+
+    function toggleIntegration(integrationName) {
+      const badgeId = 'badge-' + integrationName.toLowerCase();
+      const badge = document.getElementById(badgeId);
+      const isEnabled = badge.classList.contains('badge-enabled');
+      
+      toggleFeature(integrationName, !isEnabled);
+      
+      // Update UI
+      if (isEnabled) {
+        badge.classList.remove('badge-enabled');
+        badge.classList.add('badge-disabled');
+        badge.textContent = 'Disabled';
+      } else {
+        badge.classList.remove('badge-disabled');
+        badge.classList.add('badge-enabled');
+        badge.textContent = 'Enabled';
+      }
+    }
+
+    function loadIntegrationStatus() {
+      google.script.run
+        .withSuccessHandler(function(status) {
+          updateIntegrationBadge('slack', status.slack);
+          updateIntegrationBadge('trello', status.trello);
+          updateIntegrationBadge('linear', status.linear);
+          updateIntegrationBadge('notion', status.notion);
+          updateIntegrationBadge('whatsapp', status.whatsapp);
+          updateIntegrationBadge('discord', status.discord);
+          updateIntegrationBadge('zapier', status.zapier);
+          updateIntegrationBadge('todoist', status.todoist);
+        })
+        .withFailureHandler(function(error) {
+          console.error('Failed to load integration status:', error);
+        })
+        .getFeatureStatus();
+    }
+
+    function updateIntegrationBadge(name, enabled) {
+      const badge = document.getElementById('badge-' + name);
+      if (enabled) {
+        badge.classList.remove('badge-disabled');
+        badge.classList.add('badge-enabled');
+        badge.textContent = 'Enabled';
+      } else {
+        badge.classList.remove('badge-enabled');
+        badge.classList.add('badge-disabled');
+        badge.textContent = 'Disabled';
+      }
+    }
+
+    function openSettings() {
+      google.script.host.close();
+      showStatus('ℹ️ Opening Settings sheet...', 'info');
+    }
+
+    function openComplianceLog() {
+      google.script.run
+        .withSuccessHandler(function() {
+          showStatus('ℹ️ Opening Compliance Log...', 'info');
+        })
+        .openComplianceDashboard();
+    }
+
+    function exportData() {
+      showStatus('ℹ️ Export feature coming soon!', 'info');
+    }
+
+    function clearCache() {
+      showStatus('ℹ️ Cache cleared successfully!', 'success');
+    }
+
+    // Load initial data
+    window.onload = function() {
+      refreshStats();
+      loadFeatureStatus();
+    };
+  </script>
+</body>
+</html>

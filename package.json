@@ -1,0 +1,37 @@
+{
+  "name": "life-admin-os",
+  "version": "2.0.1",
+  "description": "Automated email management system for Gmail with Google Apps Script",
+  "main": "src/Code.gs",
+  "scripts": {
+    "deploy": "clasp push --force",
+    "setup": "bash scripts/setup.sh",
+    "test": "bash scripts/test.sh",
+    "login": "clasp login",
+    "create": "clasp create --type standalone --title 'Life Admin OS'",
+    "open": "clasp open",
+    "pull": "clasp pull",
+    "push": "clasp push",
+    "watch": "clasp push --watch"
+  },
+  "keywords": [
+    "gmail",
+    "automation",
+    "apps-script",
+    "email-management",
+    "productivity"
+  ],
+  "author": "Life Admin OS Contributors",
+  "license": "MIT",
+  "devDependencies": {
+    "@google/clasp": "^2.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_USERNAME/life-admin-os.git"
+  },
+  "bugs": {
+    "url": "https://github.com/YOUR_USERNAME/life-admin-os/issues"
+  },
+  "homepage": "https://github.com/YOUR_USERNAME/life-admin-os#readme"
+}

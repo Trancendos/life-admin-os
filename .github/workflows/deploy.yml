@@ -1,0 +1,50 @@
+name: Deploy to Google Apps Script
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install clasp
+        run: npm install -g @google/clasp
+      
+      - name: Create .clasprc.json
+        run: |
+          echo '${{ secrets.CLASP_CREDENTIALS }}' > ~/.clasprc.json
+      
+      - name: Create .clasp.json
+        run: |
+          echo '{"scriptId":"${{ secrets.SCRIPT_ID }}","rootDir":"./src"}' > .clasp.json
+      
+      - name: Deploy to Apps Script
+        run: |
+          clasp push --force
+          echo "✅ Deployment successful!"
+      
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "🎉 Life Admin OS deployed successfully to Google Apps Script!"
+          echo "Script ID: ${{ secrets.SCRIPT_ID }}"
+          echo "Deployed at: $(date)"
+      
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Deployment failed! Check the logs above for details."
+          exit 1
