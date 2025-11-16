@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deploy Life Admin OS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        
+        .steps {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .step:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+        
+        .step-content {
+            flex: 1;
+            padding-top: 3px;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .deploy-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .deploy-option {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .deploy-option:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .option-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .option-title {
+            font-weight: 600;
+            font-size: 18px;
+            color: #333;
+        }
+        
+        .option-badge {
+            background: #667eea;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .option-badge.recommended {
+            background: #4caf50;
+        }
+        
+        .option-desc {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .option-stats {
+            display: flex;
+            gap: 20px;
+            font-size: 13px;
+        }
+        
+        .stat {
+            color: #999;
+        }
+        
+        .stat strong {
+            color: #333;
+        }
+        
+        .deploy-button {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        
+        .deploy-button:hover {
+            background: #5568d3;
+        }
+        
+        .deploy-button.secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        .deploy-button.secondary:hover {
+            background: #f8f9ff;
+        }
+        
+        .note {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #856404;
+        }
+        
+        .note strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Deploy Life Admin OS</h1>
+        <p class="subtitle">Choose your deployment method below</p>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <div class="step-title">Choose Deployment Method</div>
+                    <div class="step-desc">Select manual or automated deployment below</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <div class="step-title">Authenticate with Google</div>
+                    <div class="step-desc">Grant permissions to access Apps Script and Sheets</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <div class="step-title">Deploy & Configure</div>
+                    <div class="step-desc">Code is deployed and sheets are initialized</div>
+                </div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <div class="step-title">Start Using</div>
+                    <div class="step-desc">Open your spreadsheet and run your first scan!</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="deploy-options">
+            <div class="deploy-option">
+                <div class="option-header">
+                    <div class="option-title">Manual Deployment</div>
+                    <div class="option-badge">Full Control</div>
+                </div>
+                <div class="option-desc">
+                    Follow step-by-step instructions to deploy using clasp CLI. Best for developers who want complete control.
+                </div>
+                <div class="option-stats">
+                    <div class="stat"><strong>Time:</strong> 15-20 min</div>
+                    <div class="stat"><strong>Skill:</strong> Medium</div>
+                    <div class="stat"><strong>Cost:</strong> £0</div>
+                </div>
+                <a href="https://github.com/Trancendos/life-admin-os/blob/main/docs/DEPLOYMENT_GUIDE.md" class="deploy-button secondary" style="margin-top: 15px;">
+                    View Manual Guide
+                </a>
+            </div>
+            
+            <div class="deploy-option">
+                <div class="option-header">
+                    <div class="option-title">Automated Deployment (Coming Soon)</div>
+                    <div class="option-badge recommended">Recommended</div>
+                </div>
+                <div class="option-desc">
+                    One-click deployment using Zapier or Pipedream. No technical knowledge required.
+                </div>
+                <div class="option-stats">
+                    <div class="stat"><strong>Time:</strong> 2-3 min</div>
+                    <div class="stat"><strong>Skill:</strong> None</div>
+                    <div class="stat"><strong>Cost:</strong> £0</div>
+                </div>
+                <button class="deploy-button" style="margin-top: 15px;" disabled>
+                    Coming Soon
+                </button>
+            </div>
+        </div>
+        
+        <div class="note">
+            <strong>📋 Prerequisites:</strong>
+            You'll need a Google account and must enable the Google Apps Script API (instructions provided in the deployment guide).
+        </div>
+    </div>
+</body>
+</html>

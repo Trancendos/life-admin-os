@@ -1,8 +1,15 @@
-# Life Admin OS - Automated Deployment Package
+# Life Admin OS - Automated Deplo# Life Admin OS
+
+[![Deploy Status](https://github.com/Trancendos/life-admin-os/actions/workflows/deploy.yml/badge.svg)](https://github.com/Trancendos/life-admin-os/actions/workflows/deploy.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Version](https://img.shields.io/badge/version-2.0.1-blue.svg)](https://github.com/Trancendos/life-admin-os/releases)
+[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/Trancendos/life-admin-os/pulls)
 
 > **Version 2.0.1** - Production-ready with full CI/CD automation
 
 Your personal email automation system for Gmail, built entirely on Google Workspace with zero cost and complete automation.
+
+**[📖 Documentation](https://github.com/Trancendos/life-admin-os/blob/main/docs/DEPLOYMENT_GUIDE.md)** | **[🚀 Deploy Now](https://trancendos.github.io/life-admin-os/deploy.html)** | **[💬 Get Help](https://github.com/Trancendos/life-admin-os/issues)**
 
 ---
 
